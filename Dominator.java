@@ -1,28 +1,35 @@
 // Author: Jason Thai 10/6/2015
-// https://codility.com/demo/results/demoKUB9DT-E2R/
-import java.util.HashMap;
+// https://codility.com/demo/results/demoETPEZ2-DZA/
 
 public class Dominator {
 	public int solution(int[] A) {
-        HashMap<Integer, Integer> counter = new HashMap<Integer, Integer>();
         int len = A.length;
-        int highest = 0;
-        int dominator = 0;
+        int st = 0;
+        int top = 0;
         for (int i = 0; i < len; i++) {
-            int x;
-            if (counter.get(A[i]) == null) {
-                x = 0;
+            if (st == 0) {
+                st++;
+                top = A[i];
             } else {
-                x = counter.get(A[i]);
-            }
-            counter.put(A[i], x+1);
-            if (x+1 > highest) {
-                highest++;
-                dominator = i;
+                if (top != A[i]) {
+                    st--;
+                } else {
+                    st++;
+                }
             }
         }
-        if (highest > len/2.0) {
-            return dominator;
+        if (st > 0) {
+            int count = 0;
+            int index = 0;
+            for (int i = 0; i < len; i++) {
+                if (A[i] == top) {
+                    count++;
+                    index = i;
+                }
+            }
+            if (count > len/2.0) {
+                return index;
+            }
         }
         return -1;
     }
